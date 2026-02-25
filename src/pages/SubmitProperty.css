@@ -1,0 +1,368 @@
+.submit-page {
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.form-container {
+    background: white;
+    max-width: 600px;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 40px;
+    border: 1px solid var(--border);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.icon-circle {
+    width: 64px;
+    height: 64px;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.form-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    color: var(--text-muted);
+}
+
+.property-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: var(--background);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.w-full {
+    width: 100%;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.calculating-state {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.calculating-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+.calculating-state p {
+    color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-container {
+        padding: 24px;
+    }
+}
+
+.estimator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.ai-header {
+    color: var(--accent);
+}
+
+.ai-header h3 {
+    color: var(--text-main);
+}
+
+.ai-reason {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.upgrades-list-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.compact-upgrade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+}
+
+.upgrade-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.upgrade-badge {
+    background: var(--background);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.mt-top-border {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+}
+
+.roi-calculator-container {
+    position: sticky;
+    top: 90px;
+}
+
+.roi-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 30px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+}
+
+.roi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+}
+
+.roi-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--secondary);
+    margin-bottom: 24px;
+}
+
+.roi-header h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.roi-stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.roi-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border);
+}
+
+.roi-stat-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.roi-stat-row.highlight {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 1.05rem;
+}
+
+.stat-num {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+.roi-result-box {
+    background: var(--background);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    text-align: center;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.roi-result-box.profit {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.roi-result-box.profit .result-header {
+    color: #166534;
+}
+
+.roi-result-box.profit .main-result {
+    color: #15803d;
+}
+
+.roi-result-box.profit .roi-badge {
+    background: #22c55e;
+    color: white;
+}
+
+.roi-result-box.loss {
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.roi-result-box.loss .result-header {
+    color: #991b1b;
+}
+
+.roi-result-box.loss .main-result {
+    color: #b91c1c;
+}
+
+.roi-result-box.loss .roi-badge {
+    background: #ef4444;
+    color: white;
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.result-header h4 {
+    margin: 0;
+    font-size: 1.125rem;
+}
+
+.main-result {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.roi-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.result-caption {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+    .estimator-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .upgrades-grid {
+        grid-template-columns: 1fr;
+    }
+}
