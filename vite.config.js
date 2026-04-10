@@ -2,6 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: "/urban-renovte/",
   plugins: [react()],
+  base: '/Fullstack-Project-frontend/'   // 🔥 VERY IMPORTANT
 })

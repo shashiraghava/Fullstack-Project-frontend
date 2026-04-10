@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import IdeasGallery from './pages/IdeasGallery';
@@ -9,7 +9,7 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter basename="/urban-renovte/">
+    <HashRouter basename="/urban-renovte/">
       <div className="app-container">
         <Navbar />
         <main className="main-content">
@@ -22,7 +22,7 @@ function App() {
           </Routes>
         </main>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
