@@ -1,17 +1,33 @@
 .submit-page {
     padding: 60px 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 80px);
 }
 
 .form-container {
     background: white;
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     padding: 40px;
     border: 1px solid var(--border);
+    margin-bottom: 40px;
+}
+
+.error-message {
+    background-color: #fef2f2;
+    color: #ef4444;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .form-header {
@@ -363,6 +379,168 @@
 
 @media (max-width: 600px) {
     .upgrades-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dashboard Result UI */
+.dashboard-result-container {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    animation: fadeIn 0.6s ease-out;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.dashboard-header .dashboard-icon {
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.dashboard-header h3 {
+    font-size: 1.75rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.dashboard-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.dashboard-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg, 12px);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary, #3b82f6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    border-color: transparent;
+}
+
+.dashboard-card:hover::after {
+    transform: scaleX(1);
+}
+
+.dashboard-card.result-highlight {
+    background: linear-gradient(145deg, #f0f9ff 0%, #ffffff 100%);
+    border-color: #bae6fd;
+}
+
+.dashboard-card.result-highlight::after {
+    background: #0284c7;
+}
+
+.card-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover .card-icon-wrapper {
+    transform: scale(1.1);
+}
+
+.bg-blue-light { background: #e0f2fe; }
+.text-blue { color: #0284c7; }
+
+.bg-green-light { background: #dcfce7; }
+.text-green { color: #16a34a; }
+
+.bg-primary-light { background: var(--primary-light, #e0e7ff); }
+.text-primary { color: var(--primary, #4f46e5); }
+
+.bg-purple-light { background: #f3e8ff; }
+.text-purple { color: #9333ea; }
+
+.card-label {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.card-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.recommendation-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f8fafc;
+    padding: 16px 24px;
+    border-radius: var(--radius-md, 8px);
+    border: 1px dashed #cbd5e1;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: background 0.3s ease;
+}
+
+.recommendation-notice:hover {
+    background: #f1f5f9;
+}
+
+.recommendation-notice .text-green {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+@media (max-width: 600px) {
+    .dashboard-grid {
         grid-template-columns: 1fr;
     }
 }

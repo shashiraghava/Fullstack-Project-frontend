@@ -1,99 +1,121 @@
-import React, { useContext, useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, TrendingUp, IndianRupee, Sparkles } from 'lucide-react';
-import { AppContext } from '../context/AppContext';
-import IdeaCard from '../components/IdeaCard';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import Button from '../components/ui/Button';
 import './Recommendations.css';
 
 const Recommendations = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { ideas } = useContext(AppContext);
+
+    const [ideas, setIdeas] = useState(null); // 🔥 object ga set chesam
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const propertyData = location.state?.propertyData;
 
     useEffect(() => {
         if (!propertyData) {
             navigate('/submit');
+            return;
         }
+
+        fetch("http://localhost:8080/api/recommendations", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(propertyData)
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to fetch data");
+                return res.json();
+            })
+            .then(data => {
+                console.log("Backend response:", data);
+
+                setIdeas(data); // ✅ IMPORTANT FIX
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setError("Unable to load recommendations");
+                setLoading(false);
+            });
+
     }, [propertyData, navigate]);
 
-    if (!propertyData) return null;
+    // ❌ no data
+    if (!propertyData) {
+        return <h2 style={{ textAlign: "center" }}>Please fill property details first ⚠️</h2>;
+    }
 
-    // Simple logic to mock recommendations
-    const recommendedIdeas = ideas.filter(idea =>
-        idea.budgetLevel === propertyData.budgetLevel || idea.budgetLevel === 'Budget'
-    ).slice(0, 3); // Top 3 ideas
+    // ⏳ loading
+    if (loading) {
+        return <h2 style={{ textAlign: "center" }}>Loading recommendations... ⏳</h2>;
+    }
 
-    const size = parseFloat(propertyData.sizeSqFt) || 0;
-    const baseValue = size * 6000;
-
-    // Simulated added value sum
-    const totalValueAdded = recommendedIdeas.reduce((sum, idea) => {
-        const isHigh = idea.valueAdded.includes('High');
-        return sum + (isHigh ? 300000 : 150000);
-    }, 0);
-
-    const potentialValue = baseValue + totalValueAdded;
-
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            maximumFractionDigits: 0
-        }).format(amount);
-    };
+    // ❌ error
+    if (error) {
+        return <h2 style={{ textAlign: "center", color: "red" }}>{error}</h2>;
+    }
 
     return (
         <div className="recommendations-page container">
+
+            {/* Back Button */}
             <button className="back-link" onClick={() => navigate('/submit')}>
                 <ArrowLeft size={16} /> Edit Details
             </button>
 
+            {/* Header */}
             <div className="results-header">
                 <h1>Your Personalized Value Enhancement Report</h1>
-                <p>Prepared for {propertyData.propertyType} in {propertyData.location}</p>
-            </div>
 
-            <div className="value-estimator-card">
-                <div className="value-section current-value">
-                    <p className="value-label">Current Estimated Value</p>
-                    <h2 className="value-amount">{formatCurrency(baseValue)}</h2>
-                </div>
-
-                <div className="value-arrow">
-                    <TrendingUp size={32} />
-                    <span>+{formatCurrency(totalValueAdded)}</span>
-                </div>
-
-                <div className="value-section potential-value">
-                    <p className="value-label">Potential Value After Upgrades</p>
-                    <h2 className="value-amount text-primary">{formatCurrency(potentialValue)}</h2>
-                </div>
+                <p>
+                    Property in <b>{ideas?.location}</b> ({ideas?.propertyType})
+                </p>
             </div>
 
             <div className="recommendations-content">
+
+                {/* 🔥 FRONTEND STATIC IDEAS */}
                 <div className="section-title-wrapper">
                     <Sparkles className="text-accent" />
-                    <h2>Top Recommended Upgrades</h2>
-                    <span className="badge-sm">{propertyData.budgetLevel} Budget</span>
-                </div>
-                <p className="section-desc">
-                    Based on your {propertyData.sizeSqFt} sq.ft space in {propertyData.location}, these are the highest ROI improvements.
-                </p>
-
-                <div className="grid-layout mt-30">
-                    {recommendedIdeas.map(idea => (
-                        <IdeaCard key={idea.id} idea={idea} />
-                    ))}
+                    <h2>Recommended Upgrades</h2>
                 </div>
 
+                <div className="idea-card">
+                    <ul>
+                        <li>Interior Renovation</li>
+                        <li>Smart Home Automation</li>
+                        <li>Solar Panels</li>
+                    </ul>
+                </div>
+
+                {/* 🔥 BACKEND DATA */}
+                <div className="section-title-wrapper">
+                    <h3>Backend Suggestion</h3>
+                </div>
+
+                <div className="idea-card">
+                    <p><b>Location:</b> {ideas?.location}</p>
+                    <p><b>Property Type:</b> {ideas?.propertyType}</p>
+                    <p><b>Size:</b> {ideas?.sizeSqFt}</p>
+                    <p><b>Suggestion:</b> {ideas?.suggestion}</p>
+                </div>
+
+                {/* CTA */}
                 <div className="cta-section">
-                    <h3>Ready to increase your property value?</h3>
-                    <p>Book a consultation with our verified enhancement experts to get accurate quotes.</p>
-                    <Button variant="primary" size="lg" onClick={() => alert("Consultation request submitted successfully. Our expert will contact you soon.")}>Consult an Expert</Button>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        onClick={() => alert("Backend connected successfully!")}
+                    >
+                        Done
+                    </Button>
                 </div>
+
             </div>
         </div>
     );
